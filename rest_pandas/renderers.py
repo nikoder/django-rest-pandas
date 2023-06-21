@@ -3,7 +3,6 @@ from rest_framework import status
 from tempfile import mkstemp
 from pandas import DataFrame
 from io import StringIO, BytesIO
-import os
 
 
 RESPONSE_ERROR = (
@@ -60,19 +59,13 @@ class PandasFileRenderer(PandasBaseRenderer):
     """
 
     def init_output(self):
-        file, filename = mkstemp(suffix="." + self.format)
-        self.filename = filename
-        os.close(file)
+        self.file = BytesIO()
 
     def get_pandas_args(self, data):
-        return [self.filename]
+        return [self.file]
 
     def get_output(self):
-        file = open(self.filename, "rb")
-        result = file.read()
-        file.close()
-        os.unlink(self.filename)
-        return result
+        return self.file.getvalue()
 
 
 class PandasHTMLRenderer(TemplateHTMLRenderer, PandasBaseRenderer):

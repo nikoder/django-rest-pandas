@@ -60,7 +60,7 @@ setup(
     long_description_content_type="text/markdown",
     install_requires=[
         "djangorestframework>=3.3.1",
-        "pandas>=0.19.0",
+        "pandas>=1.4.0",
     ],
     classifiers=[
         "Framework :: Django",
